@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joc</title>
+    <style>
+        #puzzle-container {
+            width: 600px;
+            height: 600px;
+            border: 1px solid;
+            position: relative;
+        }
+
+        .puzzle-item {
+            width: 200px;
+            height: 200px;
+            border: 1px solid;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            font-size: 2em;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div id="puzzle-container"></div>
+    <script>
+        const puzzContainer = document.querySelector("#puzzle-container")
+        let puzzle = []
+        let size = 3
+        generatePuzzle()
+        randomizePuzzle()
+        renderPuzzle()
+        handleinput()
+        function getRow(pos) {
+            return Math.ceil(pos / size);
+
+        }
+        function getCol(pos) {
+            const col = pos % 3;
+            if (col === 0) {
+                return size;
+            }
+            return col;
+        }
+        function generatePuzzle() {
+            for (let i = 1; i <= size * size; i++) {
+                puzzle.push({
+                    value: i,
+                    position: i,
+                    x: (getCol(i) - 1) * 200,
+                    y: (getRow(i) - 1) * 200,
+                    disabled: false,
+
+                })
+            }
+            console.log(puzzle)
+        }
+        function renderPuzzle() {
+            puzzContainer.innerHTML = ""
+            for (let puzzleItem of puzzle) {
+                if (puzzleItem.disabled) continue
+                puzzContainer.innerHTML += `
+                    <div class="puzzle-item" style="left: ${puzzleItem.x}px; top: ${puzzleItem.y}px;">
+                        ${puzzleItem.value}
+                        </div>
+                        `
+            }
+        }
+
+        function randomizePuzzle() {
+            const randomValues = getRandomvalues()
+            console.log(randomValues)
+            let i = 0;
+            for (let puzzleItem of puzzle) {
+                puzzleItem.value = randomValues[i]
+                i++
+            }
+
+            const puzzleToHide = puzzle.find((item) => item.value === size * size)
+            console.log(puzzleToHide)
+            puzzleToHide.disabled = true;
+            console.log(puzzle)
+        }
+        function getRandomvalues() {
+            const values = []
+            for (let i = 1; i <= size * size; i++) {
+                values.push(i);
+            }
+            const randomValues = values.sort(() => Math.random() - 0.5)
+            return randomValues
+        }
+        function handleinput() {
+            document.addEventListener('keydown', handleKeyDown)
+
+        }
+        function handleKeyDown(e) {
+            console.log(e.key)
+            switch (e.key) {
+                case 'ArrowLeft':
+                    moveLeft()
+                    break
+                case 'ArrowRight':
+                    moveRight()
+                    break
+                case 'ArrowUp':
+                    moveUp()
+                    break
+                case 'ArrowDown':
+                    moveDown()
+                    break
+
+            }
+            renderPuzzle()
+        }
+
+        function getEmptyPiece() {
+            return puzzle.find((item) => item.disabled)
+        }
+        function getPuzzleByPos(pos) {
+            return puzzle.find(item => item.position === pos)
+        }
+        function getRightPiece() {
+            const emptyPuzzle = getEmptyPiece()
+            const isRightEdge = getCol(emptyPuzzle.position) === size
+            if (isRightEdge) {
+                return null
+            }
+            const puzzle = getPuzzleByPos(emptyPuzzle.position + 1)
+            return puzzle;
+        }
+        function getLeftPiece() {
+            const emptyPuzzle = getEmptyPiece()
+            const isRightEdge = getCol(emptyPuzzle.position) === 1
+            if (isRightEdge) {
+                return null
+            }
+            const puzzle = getPuzzleByPos(emptyPuzzle.position - 1)
+            return puzzle;
+        }
+        function getBelowPiece() {
+            const emptyPuzzle = getEmptyPiece()
+            const isBottomEdge = getRow(emptyPuzzle.position) === size
+            if (isBottomEdge) {
+                return null
+            }
+            const puzzle = getPuzzleByPos(emptyPuzzle.position + size)
+            return puzzle;
+        }
+        function getAbovePiece() {
+            const emptyPuzzle = getEmptyPiece()
+            const isTopEdge = getRow(emptyPuzzle.position) === 1
+            if (isTopEdge) {
+                return null
+            }
+            const puzzle = getPuzzleByPos(emptyPuzzle.position - size)
+            return puzzle;
+        }
+
+        function moveLeft() {
+            const emptyPuzzle = getEmptyPiece()
+            const rightPuzzle = getRightPiece()
+            if (rightPuzzle) { swapPositions(emptyPuzzle, rightPuzzle, true) }
+
+        }
+        function swapPositions(first, second, isX = false) {
+            let aux = first.position;
+            first.position = second.position;
+            second.position = aux;
+            if (isX) {
+                aux = first.x;
+                first.x = second.x;
+                second.x = aux;
+            }
+            else {
+                aux = first.y;
+                first.y = second.y;
+                second.y = aux;
+            }
+
+
+
+
+        }
+        function moveRight() {
+            const emptyPuzzle = getEmptyPiece()
+            const leftPuzzle = getLeftPiece()
+            if (leftPuzzle) { swapPositions(emptyPuzzle, leftPuzzle, true) }
+
+        }
+        function moveUp() {
+            const emptyPuzzle = getEmptyPiece()
+            const belowPuzzle = getBelowPiece()
+            if (belowPuzzle) { swapPositions(emptyPuzzle, belowPuzzle, false) }
+
+        }
+        function moveDown() {
+            const emptyPuzzle = getEmptyPiece()
+            const abovePuzzle = getAbovePiece()
+            if (abovePuzzle) { swapPositions(emptyPuzzle, abovePuzzle, false) }
+
+        }
+    </script>
+</body>
+</html>
