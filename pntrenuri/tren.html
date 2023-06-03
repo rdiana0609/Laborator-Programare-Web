@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lista de trenuri</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	  $("#plecare").change(function(){
+	    var plecare = $(this).val();
+	    $.ajax({
+	      url: "http://localhost/pntrenuri/trenuri.php",
+	      method: "POST",
+	      data: {plecare: plecare},
+	      success: function(data){
+	        $("#sosire").html(data);
+	      }
+	    });
+	  });
+	});
+	</script>
+</head>
+<body>
+	<label>Statie de plecare:</label>
+	<select id="plecare">
+		<option value="">Selecteaza statia de plecare</option>
+		<option value="Bucuresti">Bucuresti</option>
+		<option value="Cluj">Cluj</option>
+		<option value="Sighet">Sighet</option>
+	</select>
+	<br><br>
+	<label>Statie de sosire:</label>
+	<select id="sosire">
+		<option value="">Selecteaza statia de sosire</option>
+	</select>
+</body>
+</html>
