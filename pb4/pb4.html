@@ -1,0 +1,79 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="pb4.css">
+    <script src="pb4.js"></script>
+</head>
+<body>
+<table id="game">
+    <tr>
+        <td id="1" onclick="put(this)"></td>
+        <td id="2" onclick="put(this)"></td>
+        <td id="3" onclick="put(this)"></td>
+    </tr>
+
+    <tr>
+        <td id="4" onclick="put(this)"></td>
+        <td id="5" onclick="put(this)"></td>
+        <td id="6" onclick="put(this)"></td>
+    </tr>
+
+    <tr>
+        <td id="7" onclick="put(this)"></td>
+        <td id="8" onclick="put(this)"></td>
+        <td id="9" onclick="put(this)"></td>
+    </tr>
+</table>
+<div>
+    <p id="result"></p>
+</div>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="pb4.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet"> 
+</head>
+<body>
+    <div class="container">
+        <h1 id="playerText">Tic Tac Toe</h1>
+        <button id="restartBtn">Restart</button>
+
+        <div id="gameboard">
+           <tr>
+             <div class="box" id="1" onclick="put(this) "></div>
+            <div class="box" id="2" onclick="put(this) "></div>
+            <div class="box" id="3" onclick="put(this) "></div>
+           </tr>
+           <tr>
+            <div class="box" id="4" onclick="put(this) "></div>
+            <div class="box" id="5" onclick="put(this) "></div>
+            <div class="box" id="6" onclick="put(this) "></div>
+           </tr>
+           <tr>
+            <div class="box" id="7" onclick="put(this) "></div>
+            <div class="box" id="8" onclick="put(this) "></div>
+            <div class="box" id="9" onclick="put(this) "></div>
+           </tr>
+        </div>
+    </div>
+    <div>
+        <p id="result"></p>
+    </div>
+    <script src="pb4.js"></script>
+</body>
+</html>
